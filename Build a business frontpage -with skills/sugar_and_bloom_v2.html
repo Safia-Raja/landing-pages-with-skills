@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugar &amp; Bloom — Handcrafted Custom Cakes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F8F1E4;
+    --ivory-deep:#F1E7D3;
+    --blush:#FBE9EE;
+    --sage-tint:#EDF2E7;
+    --espresso:#33221A;
+    --espresso-soft:#5A4234;
+    --berry:#AF3358;
+    --berry-deep:#8E2946;
+    --sage:#7C9473;
+    --butter:#E7B44A;
+    --line:rgba(51,34,26,0.14);
+    --shadow: 0 18px 40px -20px rgba(51,34,26,0.35);
+    --radius-a: 4px 120px 4px 4px;
+    --radius-b: 120px 4px 4px 4px;
+    --ff-display:"Fraunces", Georgia, serif;
+    --ff-body:"Work Sans", -apple-system, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:var(--ff-body);
+    color:var(--espresso);
+    background:var(--ivory);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; }
+  h1,h2,h3{ font-family:var(--ff-display); margin:0; font-weight:500; }
+  p{ margin:0; }
+  button{ font-family:inherit; cursor:pointer; }
+  .wrap{ max-width:1140px; margin:0 auto; padding:0 32px; }
+
+  :focus-visible{ outline:2px solid var(--berry); outline-offset:3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- scallop divider (piping-edge motif) ---------- */
+  .scallop{
+    position:relative;
+    width:100%;
+    height:26px;
+    background-repeat:repeat-x;
+    background-position:center top;
+    background-size:44px 26px;
+    z-index:2;
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:22px 0;
+    transition:background-color .35s ease, padding .35s ease, box-shadow .35s ease;
+  }
+  .nav.scrolled{
+    background:rgba(248,241,228,0.94);
+    backdrop-filter:blur(6px);
+    padding:14px 0;
+    box-shadow:0 8px 24px -18px rgba(51,34,26,0.5);
+  }
+  .nav .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{
+    font-family:var(--ff-display);
+    font-size:1.4rem;
+    font-weight:500;
+    color:var(--ivory);
+    letter-spacing:.01em;
+    transition:color .35s ease;
+    text-decoration:none;
+  }
+  .nav.scrolled .brand{ color:var(--espresso); }
+  .nav-links{ display:flex; gap:34px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    text-decoration:none; font-size:.95rem; color:var(--ivory);
+    padding-bottom:3px; border-bottom:1px solid transparent;
+    transition:color .35s ease, border-color .2s ease;
+  }
+  .nav.scrolled .nav-links a{ color:var(--espresso-soft); }
+  .nav-links a:hover{ border-color:currentColor; }
+  .nav-toggle{
+    display:none; background:none; border:none; width:34px; height:26px; position:relative;
+  }
+  .nav-toggle span, .nav-toggle::before, .nav-toggle::after{
+    content:""; position:absolute; left:0; right:0; height:2px; background:var(--ivory);
+    transition:background .35s ease;
+  }
+  .nav-toggle::before{ top:0; }
+  .nav-toggle span{ top:12px; }
+  .nav-toggle::after{ top:24px; }
+  .nav.scrolled .nav-toggle span, .nav.scrolled .nav-toggle::before, .nav.scrolled .nav-toggle::after{
+    background:var(--espresso);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    background-image:
+      linear-gradient(115deg, rgba(41,26,19,0.94) 0%, rgba(41,26,19,0.78) 32%, rgba(143,41,70,0.42) 58%, rgba(41,26,19,0.18) 100%),
+      url("https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1600&q=80");
+    background-size:cover;
+    background-position:center 65%;
+    padding:140px 0 90px;
+  }
+  .hero-inner{ max-width:600px; opacity:0; animation:riseIn .9s .15s ease forwards; }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(22px);} to{ opacity:1; transform:translateY(0);} }
+  .hero-kicker{
+    color:var(--butter);
+    font-size:1rem;
+    font-family:var(--ff-display);
+    font-style:italic;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    color:var(--ivory);
+    font-size:clamp(2.6rem, 5.4vw, 4.4rem);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+  }
+  .hero-tagline{
+    color:var(--ivory-deep);
+    font-size:clamp(1.05rem, 1.6vw, 1.3rem);
+    margin-top:22px;
+    max-width:34ch;
+    font-weight:400;
+  }
+  .hero-actions{ display:flex; gap:18px; margin-top:40px; flex-wrap:wrap; }
+  .btn{
+    display:inline-block;
+    padding:15px 30px;
+    border-radius:var(--radius-a);
+    font-size:.98rem;
+    font-weight:600;
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
+  }
+  .btn-primary{ background:var(--berry); color:var(--ivory); }
+  .btn-primary:hover{ background:var(--berry-deep); transform:translateY(-2px); box-shadow:0 14px 30px -12px rgba(143,41,70,0.6); }
+  .btn-ghost{ color:var(--ivory); border-color:rgba(248,241,228,0.5); background:transparent; }
+  .btn-ghost:hover{ border-color:var(--ivory); background:rgba(248,241,228,0.08); }
+
+  /* ---------- section shells ---------- */
+  section{ position:relative; }
+  .section-pad{ padding:96px 0 104px; }
+  .section-head{ max-width:560px; margin-bottom:56px; }
+  .section-head .label{
+    font-family:var(--ff-display); font-style:italic; color:var(--berry); font-size:1.05rem; margin-bottom:10px;
+  }
+  .section-head h2{ font-size:clamp(1.9rem, 3vw, 2.6rem); line-height:1.15; }
+  .section-head p{ margin-top:16px; color:var(--espresso-soft); font-size:1.05rem; max-width:52ch; }
+
+  /* ---------- quiz ---------- */
+  .quiz-section{ background:var(--ivory); }
+  .quiz-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius-a);
+    box-shadow:var(--shadow);
+    max-width:720px;
+    margin:0 auto;
+    overflow:hidden;
+  }
+  .quiz-top{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 40px 0;
+  }
+  .quiz-dots{ display:flex; gap:10px; }
+  .quiz-dot{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--line);
+    transition:background-color .3s ease, transform .3s ease;
+  }
+  .quiz-dot.done{ background:var(--sage); }
+  .quiz-dot.active{ background:var(--berry); transform:scale(1.3); }
+  .quiz-back{
+    font-size:.85rem; color:var(--espresso-soft); background:none; border:none; padding:4px;
+    text-decoration:underline; text-underline-offset:3px; visibility:hidden;
+  }
+  .quiz-back.show{ visibility:visible; }
+
+  .quiz-viewport{ position:relative; padding:20px 40px 44px; min-height:340px; }
+  .quiz-panel{
+    position:absolute; inset:20px 40px 44px;
+    opacity:0; transform:translateX(24px);
+    pointer-events:none;
+    transition:opacity .38s ease, transform .38s ease;
+  }
+  .quiz-panel.active{ position:relative; inset:auto; opacity:1; transform:translateX(0); pointer-events:auto; }
+
+  .quiz-q{ font-size:clamp(1.4rem,2.6vw,1.8rem); margin-bottom:26px; }
+  .quiz-options{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .quiz-options.single-col{ grid-template-columns:1fr; }
+  .quiz-opt{
+    text-align:left;
+    padding:18px 20px;
+    border:1px solid var(--line);
+    border-radius:14px 14px 14px 4px;
+    background:var(--ivory);
+    font-size:1rem;
+    font-weight:500;
+    color:var(--espresso);
+    transition:border-color .2s ease, background-color .2s ease, transform .15s ease;
+  }
+  .quiz-opt:hover{ border-color:var(--berry); background:var(--blush); }
+  .quiz-opt.selected{ border-color:var(--berry); background:var(--berry); color:var(--ivory); transform:scale(0.99); }
+
+  .result-wrap{ display:flex; gap:28px; align-items:flex-start; }
+  .result-img{
+    width:180px; height:180px; flex:none; object-fit:cover;
+    border-radius:var(--radius-b);
+    box-shadow:var(--shadow);
+  }
+  .result-eyebrow{ font-family:var(--ff-display); font-style:italic; color:var(--berry); margin-bottom:6px; }
+  .result-name{ font-size:1.5rem; margin-bottom:8px; }
+  .result-desc{ color:var(--espresso-soft); font-size:.98rem; margin-bottom:10px; }
+  .result-meta{ font-size:.92rem; color:var(--espresso-soft); margin-bottom:18px; }
+  .result-meta strong{ color:var(--espresso); }
+  .result-actions{ display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  .result-restart{ font-size:.9rem; text-decoration:underline; text-underline-offset:3px; color:var(--espresso-soft); background:none; border:none; }
+
+  @media (max-width:600px){
+    .quiz-options{ grid-template-columns:1fr; }
+    .result-wrap{ flex-direction:column; }
+    .result-img{ width:100%; height:200px; }
+  }
+
+  /* ---------- menu ---------- */
+  .menu-section{ background:var(--blush); }
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:36px 32px;
+  }
+  .menu-item{ position:relative; }
+  .menu-item:nth-child(even){ transform:translateY(26px); }
+  .menu-photo{
+    width:100%; aspect-ratio:4/3; object-fit:cover;
+    border-radius:var(--radius-a);
+    margin-bottom:18px;
+  }
+  .menu-item:nth-child(3n+2) .menu-photo{ border-radius:var(--radius-b); }
+  .menu-name{ font-size:1.2rem; margin-bottom:6px; }
+  .menu-desc{ color:var(--espresso-soft); font-size:.92rem; margin-bottom:10px; min-height:2.6em; }
+  .menu-price{ font-family:var(--ff-display); font-style:italic; color:var(--berry); font-size:1.1rem; }
+
+  @media (max-width:860px){
+    .menu-grid{ grid-template-columns:repeat(2,1fr); }
+    .menu-item:nth-child(even){ transform:none; }
+  }
+  @media (max-width:560px){
+    .menu-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- testimonials ---------- */
+  .testi-section{ background:var(--sage-tint); }
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .testi-card{
+    background:var(--ivory);
+    padding:32px 28px;
+    border-radius:4px 4px 60px 4px;
+    border:1px solid var(--line);
+  }
+  .testi-card:nth-child(2){ transform:rotate(-0.6deg); }
+  .testi-card:nth-child(3){ transform:rotate(0.5deg); }
+  .testi-quote{ font-family:var(--ff-display); font-style:italic; font-size:1.08rem; line-height:1.5; color:var(--espresso); }
+  .testi-attr{ margin-top:18px; font-size:.88rem; color:var(--espresso-soft); }
+  .testi-attr b{ color:var(--espresso); font-weight:600; }
+
+  @media (max-width:860px){ .testi-grid{ grid-template-columns:1fr; } .testi-card{ transform:none !important; } }
+
+  /* ---------- contact ---------- */
+  .contact-section{ background:var(--espresso); color:var(--ivory); }
+  .contact-section .section-head p{ color:rgba(248,241,228,0.75); }
+  .contact-section .section-head .label{ color:var(--butter); }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+  .contact-info h3{ font-size:1.3rem; margin-bottom:14px; color:var(--ivory); }
+  .contact-info p{ color:rgba(248,241,228,0.75); margin-bottom:22px; }
+  .contact-detail{ margin-bottom:14px; font-size:.98rem; }
+  .contact-detail span{ display:block; color:var(--butter); font-size:.82rem; margin-bottom:2px; }
+
+  .field{ margin-bottom:26px; }
+  .field label{ display:block; font-size:.85rem; margin-bottom:8px; color:rgba(248,241,228,0.8); }
+  .field input, .field textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid rgba(248,241,228,0.35);
+    color:var(--ivory);
+    font-family:inherit;
+    font-size:1rem;
+    padding:8px 2px 12px;
+    transition:border-color .2s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:rgba(248,241,228,0.35); }
+  .field input:focus, .field textarea:focus{ border-color:var(--butter); outline:none; }
+  .field textarea{ resize:vertical; min-height:90px; }
+  .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .btn-submit{
+    background:var(--butter); color:var(--espresso); border:none;
+    padding:15px 32px; border-radius:var(--radius-b); font-weight:700; font-size:.98rem;
+    transition:transform .2s ease, background-color .2s ease;
+  }
+  .btn-submit:hover{ background:#f0c667; transform:translateY(-2px); }
+  .form-success{
+    display:none; padding:26px; border:1px solid rgba(248,241,228,0.3); border-radius:4px 40px 4px 4px;
+  }
+  .form-success.show{ display:block; }
+  .form-success h3{ color:var(--butter); margin-bottom:8px; font-size:1.2rem; }
+  .form-success p{ color:rgba(248,241,228,0.8); }
+
+  @media (max-width:860px){
+    .contact-grid{ grid-template-columns:1fr; gap:40px; }
+    .row-2{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- footer ---------- */
+  footer{ background:var(--espresso); border-top:1px solid rgba(248,241,228,0.12); padding:28px 0 40px; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  footer p{ color:rgba(248,241,228,0.5); font-size:.85rem; }
+
+  @media (max-width:760px){
+    .nav-links{
+      position:fixed; top:0; right:0; height:100vh; width:min(280px,80vw);
+      background:var(--ivory); flex-direction:column; padding:110px 32px 32px;
+      transform:translateX(100%); transition:transform .35s ease;
+      box-shadow:-20px 0 40px rgba(0,0,0,0.15);
+    }
+    .nav-links.open{ transform:translateX(0); }
+    .nav-links a{ color:var(--espresso); font-size:1.05rem; }
+    .nav-toggle{ display:block; z-index:110; }
+    .nav.menu-open .nav-toggle span, .nav.menu-open .nav-toggle::before, .nav.menu-open .nav-toggle::after{ background:var(--espresso); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand">Sugar &amp; Bloom</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#quiz">Find your cake</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Order</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-inner">
+      <p class="hero-kicker">A boutique bakery, built around your occasion</p>
+      <h1>Sugar &amp; Bloom</h1>
+      <p class="hero-tagline">Handcrafted cakes for life's sweetest moments.</p>
+      <div class="hero-actions">
+        <a href="#quiz" class="btn btn-primary">Find my cake</a>
+        <a href="#menu" class="btn btn-ghost">See the menu</a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="scallop" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2244%22 height=%2226%22%3E%3Cpath d=%22M0,0 a22,26 0 0,0 44,0 Z%22 fill=%22%23F8F1E4%22/%3E%3C/svg%3E');"></div>
+
+<section class="quiz-section section-pad" id="quiz">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">Two minutes, one recommendation</p>
+      <h2>Not sure what to order?</h2>
+      <p>Answer three quick questions and we'll match you to the cake, size, and price that fits the moment.</p>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-top">
+        <button class="quiz-back" id="quizBack">Back</button>
+        <div class="quiz-dots" id="quizDots">
+          <span class="quiz-dot" data-step="0"></span>
+          <span class="quiz-dot" data-step="1"></span>
+          <span class="quiz-dot" data-step="2"></span>
+        </div>
+        <span style="width:34px;"></span>
+      </div>
+
+      <div class="quiz-viewport" id="quizViewport">
+
+        <div class="quiz-panel active" data-step="0">
+          <p class="quiz-q">What's the occasion?</p>
+          <div class="quiz-options" data-question="occasion">
+            <button class="quiz-opt" data-value="Birthday">Birthday</button>
+            <button class="quiz-opt" data-value="Wedding">Wedding</button>
+            <button class="quiz-opt" data-value="Anniversary">Anniversary</button>
+            <button class="quiz-opt" data-value="Just Because">Just Because</button>
+          </div>
+        </div>
+
+        <div class="quiz-panel" data-step="1">
+          <p class="quiz-q">What's your flavor preference?</p>
+          <div class="quiz-options" data-question="flavor">
+            <button class="quiz-opt" data-value="Chocolate">Chocolate</button>
+            <button class="quiz-opt" data-value="Vanilla">Vanilla</button>
+            <button class="quiz-opt" data-value="Red Velvet">Red Velvet</button>
+            <button class="quiz-opt" data-value="Lemon">Lemon</button>
+            <button class="quiz-opt" data-value="Surprise Me" style="grid-column:1/-1;">Surprise Me</button>
+          </div>
+        </div>
+
+        <div class="quiz-panel" data-step="2">
+          <p class="quiz-q">What's your budget?</p>
+          <div class="quiz-options single-col" data-question="budget">
+            <button class="quiz-opt" data-value="Under $50">Under $50</button>
+            <button class="quiz-opt" data-value="$50–$100">$50 – $100</button>
+            <button class="quiz-opt" data-value="$100–$200">$100 – $200</button>
+            <button class="quiz-opt" data-value="$200+">$200+</button>
+          </div>
+        </div>
+
+        <div class="quiz-panel" data-step="3" id="resultPanel">
+          <div class="result-wrap">
+            <img class="result-img" id="resultImg" src="" alt="">
+            <div>
+              <p class="result-eyebrow" id="resultEyebrow"></p>
+              <h3 class="result-name" id="resultName"></h3>
+              <p class="result-desc" id="resultDesc"></p>
+              <p class="result-meta" id="resultMeta"></p>
+              <div class="result-actions">
+                <button class="btn btn-primary" id="resultOrderBtn" style="border:none;">Add to my order</button>
+                <button class="result-restart" id="resultRestart">Start over</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section section-pad" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">The current lineup</p>
+      <h2>Six cakes, always made to order</h2>
+      <p>Every cake is baked fresh once you order — nothing sits in a case waiting for you.</p>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<section class="testi-section section-pad" id="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">From people who ordered</p>
+      <h2>What customers tell us</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-quote">"I asked for something my grandmother would've made, and somehow they nailed it. The lemon cake didn't just taste like her kitchen — it smelled like it."</p>
+        <p class="testi-attr"><b>Naomi R.</b> — Anniversary cake</p>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"Our original wedding baker cancelled nine days out. Sugar &amp; Bloom took the call, asked three questions, and delivered a three-tier raspberry rose cake that outdid the original plan."</p>
+        <p class="testi-attr"><b>Marcus T.</b> — Wedding cake</p>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"My son doesn't like frosting. They made him a nearly-naked chocolate cake with just enough ganache drip that he ate two slices and asked for a third."</p>
+        <p class="testi-attr"><b>Priya D.</b> — Birthday cake</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section section-pad" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">Ready to order</p>
+      <h2>Tell us about your cake</h2>
+      <p>Share a few details and we'll follow up within one business day to confirm flavor, size, and pickup.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Sugar &amp; Bloom Bakery</h3>
+        <p>Custom cakes for birthdays, weddings, anniversaries, and everything worth celebrating.</p>
+        <div class="contact-detail"><span>Studio</span>214 Larkspur Lane, Portland, OR</div>
+        <div class="contact-detail"><span>Phone</span>(503) 555-0148</div>
+        <div class="contact-detail"><span>Hours</span>Tue–Sat, 9am–5pm</div>
+        <div class="contact-detail"><span>Lead time</span>Orders need at least 5 days' notice; 3+ weeks for weddings</div>
+      </div>
+
+      <div>
+        <form id="orderForm">
+          <div class="row-2">
+            <div class="field">
+              <label for="cName">Name</label>
+              <input type="text" id="cName" name="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="cEmail">Email</label>
+              <input type="email" id="cEmail" name="email" placeholder="you@email.com" required>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="cPhone">Phone</label>
+              <input type="tel" id="cPhone" name="phone" placeholder="(555) 555-5555">
+            </div>
+            <div class="field">
+              <label for="cDate">Date needed</label>
+              <input type="date" id="cDate" name="date" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cMessage">Tell us about the cake</label>
+            <textarea id="cMessage" name="message" placeholder="Occasion, flavor, size, guest count, anything you have in mind..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send order request</button>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <h3>Request sent</h3>
+          <p id="successText">Thank you — we'll be in touch within one business day to confirm the details.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="brand" style="color:var(--ivory); font-size:1.1rem;">Sugar &amp; Bloom</span>
+    <p>&copy; 2026 Sugar &amp; Bloom Bakery. All cakes baked to order.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- fallback for broken images ---------- */
+  var FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%23F1D9DD'/%3E%3Cpath d='M120 190 L280 190 L265 120 L135 120 Z' fill='%23F8F1E4' stroke='%23AF3358' stroke-width='3'/%3E%3Ccircle cx='150' cy='105' r='7' fill='%23AF3358'/%3E%3Ccircle cx='200' cy='95' r='7' fill='%23AF3358'/%3E%3Ccircle cx='250' cy='105' r='7' fill='%23AF3358'/%3E%3C/svg%3E";
+  function withFallback(img){ img.addEventListener("error", function(){ img.onerror=null; img.src=FALLBACK; }); }
+
+  /* ---------- nav ---------- */
+  var nav = document.getElementById("nav");
+  window.addEventListener("scroll", function(){
+    nav.classList.toggle("scrolled", window.scrollY > 40);
+  });
+
+  var navToggle = document.getElementById("navToggle");
+  var navLinks = document.getElementById("navLinks");
+  navToggle.addEventListener("click", function(){
+    var open = navLinks.classList.toggle("open");
+    nav.classList.toggle("menu-open", open);
+    navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  navLinks.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){
+      navLinks.classList.remove("open");
+      nav.classList.remove("menu-open");
+    });
+  });
+
+  /* ---------- menu data ---------- */
+  var CAKES = {
+    chocolate: {
+      name: "Midnight Chocolate Ganache",
+      desc: "Belgian dark chocolate sponge, whipped ganache, cocoa nib crunch.",
+      price: 68,
+      img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80"
+    },
+    vanilla: {
+      name: "Classic Vanilla Bean",
+      desc: "Madagascar vanilla bean sponge with silky vanilla buttercream.",
+      price: 58,
+      img: "https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=800&q=80"
+    },
+    redvelvet: {
+      name: "Ruby Velvet",
+      desc: "Cocoa-kissed red velvet, cream cheese frosting, white chocolate curls.",
+      price: 64,
+      img: "https://images.unsplash.com/photo-1687877858381-e98c32796861?auto=format&fit=crop&w=800&q=80"
+    },
+    lemon: {
+      name: "Meyer Lemon &amp; Elderflower",
+      desc: "Lemon curd and elderflower buttercream, finished with candied lemon.",
+      price: 62,
+      img: "https://images.unsplash.com/photo-1704358826048-04d97dde2f96?auto=format&fit=crop&w=800&q=80"
+    },
+    raspberry: {
+      name: "Wild Raspberry Rose",
+      desc: "Almond sponge, raspberry compote, and rose buttercream.",
+      price: 72,
+      img: "https://images.unsplash.com/photo-1584158531316-56eabe3182c7?auto=format&fit=crop&w=800&q=80"
+    },
+    caramel: {
+      name: "Salted Caramel Hazelnut",
+      desc: "Hazelnut praline sponge with a salted caramel drip and toasted hazelnuts.",
+      price: 70,
+      img: "https://images.unsplash.com/photo-1581745069539-1e60d7f965f4?auto=format&fit=crop&w=800&q=80"
+    }
+  };
+  var CAKE_ORDER = ["chocolate","vanilla","redvelvet","lemon","raspberry","caramel"];
+
+  var menuGrid = document.getElementById("menuGrid");
+  CAKE_ORDER.forEach(function(key){
+    var c = CAKES[key];
+    var el = document.createElement("div");
+    el.className = "menu-item";
+    el.innerHTML =
+      '<img class="menu-photo" src="'+c.img+'" alt="'+c.name+'">' +
+      '<h3 class="menu-name">'+c.name+'</h3>' +
+      '<p class="menu-desc">'+c.desc+'</p>' +
+      '<p class="menu-price">$'+c.price+'</p>';
+    menuGrid.appendChild(el);
+    withFallback(el.querySelector("img"));
+  });
+
+  /* ---------- quiz ---------- */
+  var state = { occasion:null, flavor:null, budget:null };
+  var step = 0;
+  var TOTAL_QUESTIONS = 3;
+
+  var panels = Array.prototype.slice.call(document.querySelectorAll(".quiz-panel"));
+  var dots = Array.prototype.slice.call(document.querySelectorAll(".quiz-dot"));
+  var backBtn = document.getElementById("quizBack");
+
+  function updateDots(){
+    dots.forEach(function(d){
+      var s = parseInt(d.getAttribute("data-step"), 10);
+      d.classList.toggle("active", s === step);
+      d.classList.toggle("done", s < step);
+    });
+  }
+
+  function goToStep(next){
+    var direction = next > step ? 1 : -1;
+    var current = panels.filter(function(p){ return p.classList.contains("active"); })[0];
+    var target = panels[next];
+    if(!target || target === current) return;
+
+    target.style.transform = "translateX(" + (direction * 24) + "px)";
+    target.style.opacity = "0";
+
+    if(current){
+      current.classList.remove("active");
+      current.style.transform = "translateX(" + (-direction * 24) + "px)";
+      current.style.opacity = "0";
+      setTimeout(function(){ current.style.transform = ""; current.style.opacity = ""; }, 420);
+    }
+
+    // force reflow so the entering panel animates from its off-screen position
+    void target.offsetWidth;
+    requestAnimationFrame(function(){
+      target.classList.add("active");
+      target.style.transform = "";
+      target.style.opacity = "";
+    });
+
+    step = next;
+    updateDots();
+    backBtn.classList.toggle("show", step > 0 && step < TOTAL_QUESTIONS);
+  }
+
+  document.querySelectorAll(".quiz-options").forEach(function(group){
+    group.addEventListener("click", function(e){
+      var btn = e.target.closest(".quiz-opt");
+      if(!btn) return;
+      var question = group.getAttribute("data-question");
+      state[question] = btn.getAttribute("data-value");
+
+      group.querySelectorAll(".quiz-opt").forEach(function(o){ o.classList.remove("selected"); });
+      btn.classList.add("selected");
+
+      setTimeout(function(){
+        if(step < TOTAL_QUESTIONS - 1){
+          goToStep(step + 1);
+        } else {
+          showResult();
+          goToStep(TOTAL_QUESTIONS);
+        }
+      }, 380);
+    });
+  });
+
+  backBtn.addEventListener("click", function(){
+    if(step > 0) goToStep(step - 1);
+  });
+
+  var OCCASION_MESSAGE = {
+    "Birthday": "Birthdays call for something worth blowing candles out for.",
+    "Wedding": "Your wedding cake should be as memorable as the toast.",
+    "Anniversary": "Here's to another year worth celebrating.",
+    "Just Because": "Sometimes ‘just because’ is reason enough."
+  };
+  var SURPRISE_MAP = {
+    "Birthday": "caramel",
+    "Wedding": "raspberry",
+    "Anniversary": "lemon",
+    "Just Because": "chocolate"
+  };
+  var FLAVOR_MAP = {
+    "Chocolate": "chocolate",
+    "Vanilla": "vanilla",
+    "Red Velvet": "redvelvet",
+    "Lemon": "lemon"
+  };
+  var BUDGET_SIZE = {
+    "Under $50": "Petite 6-inch, serves about 8",
+    "$50–$100": "Classic 8-inch, serves about 14",
+    "$100–$200": "Tiered 10-inch, serves about 30",
+    "$200+": "Grand tier, serves 50 or more"
+  };
+
+  var lastResult = null;
+
+  function showResult(){
+    var cakeKey = state.flavor === "Surprise Me"
+      ? SURPRISE_MAP[state.occasion]
+      : FLAVOR_MAP[state.flavor];
+    var cake = CAKES[cakeKey];
+    var sizeNote = BUDGET_SIZE[state.budget];
+    var message = OCCASION_MESSAGE[state.occasion];
+
+    lastResult = { cake:cake, sizeNote:sizeNote };
+
+    document.getElementById("resultEyebrow").textContent = message;
+    document.getElementById("resultName").innerHTML = cake.name;
+    document.getElementById("resultDesc").textContent = cake.desc;
+    document.getElementById("resultMeta").innerHTML = "<strong>$"+cake.price+"</strong> starting — "+sizeNote+".";
+    var img = document.getElementById("resultImg");
+    img.src = cake.img;
+    img.alt = cake.name;
+    withFallback(img);
+  }
+
+  document.getElementById("resultRestart").addEventListener("click", function(){
+    state = { occasion:null, flavor:null, budget:null };
+    document.querySelectorAll(".quiz-opt.selected").forEach(function(o){ o.classList.remove("selected"); });
+    goToStep(0);
+  });
+
+  document.getElementById("resultOrderBtn").addEventListener("click", function(){
+    if(!lastResult) return;
+    var msg = "Hi! I'd love to order the "+lastResult.cake.name.replace(/&amp;/g,"&")+" ("+lastResult.sizeNote.toLowerCase()+") for my "+(state.occasion||"celebration").toLowerCase()+".";
+    var messageField = document.getElementById("cMessage");
+    messageField.value = msg;
+    document.getElementById("contact").scrollIntoView({ behavior:"smooth" });
+    setTimeout(function(){ document.getElementById("cDate").focus(); }, 500);
+  });
+
+  /* ---------- contact form ---------- */
+  var form = document.getElementById("orderForm");
+  var success = document.getElementById("formSuccess");
+  var successText = document.getElementById("successText");
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var name = document.getElementById("cName").value.trim();
+    successText.textContent = (name ? name + ", thank" : "Thank") + " you — we'll be in touch within one business day to confirm the details.";
+    form.style.display = "none";
+    success.classList.add("show");
+  });
+
+})();
+</script>
+
+</body>
+</html>
