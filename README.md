@@ -2,7 +2,7 @@
 
 # Landing Pages with Skills
 
-*Same brief, same prompt, two builds: what a single Claude Code skill changes about design quality.*
+*Same bakery brief, two builds: what a single Claude Code skill changes about design quality.*
 
 [![HTML5](https://img.shields.io/badge/HTML5-single_file-e34f26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-custom_properties-1572b6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
@@ -10,7 +10,7 @@
 [![Built with Claude Code](https://img.shields.io/badge/Built_with-Claude_Code-d97757?style=flat-square&logo=anthropic&logoColor=white)](https://claude.com/claude-code)
 [![Skill: frontend-design](https://img.shields.io/badge/Skill-frontend--design-6b4f3f?style=flat-square)](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design)
 
-[Overview](#overview) • [Before and after](#before-and-after) • [What the skill changed](#what-the-skill-changed) • [Projects](#projects) • [Run it](#run-it) • [How I built this](#how-i-built-this)
+[Overview](#overview) • [Before and after](#before-and-after) • [What the skill changed](#what-the-skill-changed) • [The prompts](#the-prompts) • [Projects](#projects) • [Run it](#run-it) • [How I built this](#how-i-built-this)
 
 </div>
 
@@ -21,7 +21,7 @@ a landing page for *Sugar & Bloom*, a boutique bakery. The first build ran with 
 second ran with Anthropic's [`frontend-design`](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design)
 skill installed.
 
-The prompt didn't change between builds. Both pages share the same section structure:
+Both prompts ask for the same page with the same sections:
 
 - a hero with the bakery name and tagline
 - a one-question-at-a-time quiz (occasion → flavor → budget) that recommends a cake
@@ -71,6 +71,70 @@ The skill doesn't add features. Both pages do the same things. What it changes i
 decisions. It pushes for a direction specific to the brief and calls out common "AI-looking"
 defaults to avoid.
 
+> [!NOTE]
+> The skill wasn't the only thing that changed. The second prompt is also more detailed: it asks
+> for a "premium and distinctive" design, Unsplash photos and a Typeform-style quiz. Some of the
+> difference comes from that, so read this as "skill plus a sharper brief" rather than a strict
+> one-variable test.
+
+## The prompts
+
+Both prompts come from Prof. Ryan Ahmed's Claude masterclass on Udemy (Module 6, Claude Code
+Foundations). Each follows a Context / Instruction / Input / Output structure.
+
+<details>
+<summary><strong>Prompt 1: build without the skill</strong></summary>
+
+```text
+Context: I run a boutique bakery called "Sugar & Bloom." I need a website page I can open in my browser to show customers what we offer and help them pick the right cake.
+ 
+Instruction: Create a single file called "sugar_and_bloom.html" with everything a customer would need — a big beautiful intro with our name and tagline, a short interactive quiz that helps them find the right cake, our menu, some customer reviews, and a way to contact us and place an order. The quiz should feel smooth — one question at a time, not a long form.
+ 
+Implement it without using any skills.
+ 
+Input:
+- Business name: Sugar & Bloom
+- Tagline: "Handcrafted cakes for life's sweetest moments"
+- Quiz questions: What's the occasion? (Birthday, Wedding, Anniversary, Just Because) → What flavor? (Chocolate, Vanilla, Red Velvet, Lemon, Surprise Me) → Budget? (Under $50, $50–$100, $100–$200, $200+) → then recommend a cake
+- Menu: 6 cakes with names, descriptions, and prices
+- Reviews: 3 happy customer quotes
+- Contact form: name, email, phone, date needed, message
+ 
+Output: A single file I can open in any browser — everything should work, the quiz should flow nicely, and it should look good enough to show a customer.
+```
+
+</details>
+
+<details>
+<summary><strong>Prompt 2: rebuild with the skill</strong></summary>
+
+```text
+Context: I have the frontend-design skill installed. I want to rebuild my bakery landing page from scratch with a professional, distinctive design — not generic AI-looking output.
+
+Instruction: Create a single HTML file called "sugar_and_bloom_v2.html" for a boutique bakery called "Sugar & Bloom". The page should include:
+1. A beautiful hero section with the bakery name, tagline ("Handcrafted cakes for life's sweetest moments"), and a background image placeholder
+2. A Typeform-style interactive quiz that asks customers 3 questions one at a time with smooth transitions:
+   - "What's the occasion?" (Birthday, Wedding, Anniversary, Just Because)
+   - "What's your flavor preference?" (Chocolate, Vanilla, Red Velvet, Lemon, Surprise Me)
+   - "What's your budget?" (Under $50, $50–$100, $100–$200, $200+)
+   Then shows a personalized cake recommendation based on their answers
+3. A menu section with 6 cakes, each with a name, description, price, and image placeholder
+4. A testimonials section with 3 customer reviews
+5. A contact/order form with name, email, phone, date needed, and a message field
+
+Make it fully functional — the quiz should actually work, transitions should be smooth, and the design should feel premium and distinctive. Use only HTML, CSS, and vanilla JavaScript in one file.
+
+Input:
+- File name: sugar_and_bloom_v2.html
+- Business: Sugar & Bloom Bakery
+- Tagline: "Handcrafted cakes for life's sweetest moments"
+- For images use placeholder images from unsplash
+
+Output: A single self-contained HTML file with a polished, professional design that looks like it was built by a designer — not generated by AI.
+```
+
+</details>
+
 ## Projects
 
 | Page | Folder | Built with |
@@ -92,7 +156,7 @@ git clone https://github.com/safia-raja/landing-pages-with-skills.git
 
 ### Reproduce the experiment
 
-1. Ask Claude Code for the bakery page with a structured prompt (see below).
+1. Run [Prompt 1](#the-prompts) in Claude Code.
 2. Install the skill into the project:
 
    ```bash
@@ -102,15 +166,15 @@ git clone https://github.com/safia-raja/landing-pages-with-skills.git
    This puts the skill in `.claude/skills/` (for Claude Code) and `.agents/skills/` (for other
    agent runtimes). I left those folders out of the repo, so reinstall the skill with this
    command.
-3. Run the same prompt again with the skill active and compare the two files side by side.
+3. Run [Prompt 2](#the-prompts) with the skill active and compare the two files side by side.
 
 ## How I built this
 
 I didn't write the code by hand. Both pages were generated by
 **[Claude Code](https://claude.com/claude-code)**. My role was the experiment itself:
 
-- **Prompt design**: I wrote each brief in a Context / Instruction / Input / Output format so
-  that the only variable between the two bakery builds was the skill
+- **Prompts**: I ran the two course prompts above, which use a Context / Instruction / Input /
+  Output format
 - **Controlled comparison**: I kept the business, tagline, quiz questions, menu size and form
   fields identical across both builds
 - **Skill setup**: I installed `frontend-design` from Anthropic's repo before the second build
@@ -124,4 +188,4 @@ I didn't write the code by hand. Both pages were generated by
 - Cake photography in v2 via [Unsplash](https://unsplash.com)
 - [`frontend-design`](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design)
   skill by Anthropic
-- Built as part of a Claude Code course project
+- Prompts and project idea from Prof. Ryan Ahmed, PhD, MBA, in his Claude masterclass on Udemy
